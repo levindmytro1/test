@@ -1,0 +1,26 @@
+name: Check S3 Access
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  check-s3:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ secrets.ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: List S3 Buckets
+        run: |
+          aws s3 ls
