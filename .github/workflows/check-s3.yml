@@ -3,7 +3,7 @@ name: Check S3 Access
 on:
   push:
     branches:
-      - main
+      - testbranch
 
 jobs:
   check-s3:
